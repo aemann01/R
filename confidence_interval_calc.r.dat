@@ -1,0 +1,31 @@
+#distance function
+dist <- function(x1, x2, y1, y2){
+d <- sqrt((x1 - x2)^2 + (y1 - y2)^2)
+return(d)
+}
+
+#pi function
+pi.fun <- function(n){
+pts.cir <- 0
+for(i in 1:n){
+x <- runif(1) #randomly sample x
+y <- runif(1) #randomly sample y
+dist.val <- dist(x, 0, y, 0)
+if(dist.val <= 1) pts.cir <- pts.cir + 1 #evaluates distance
+}
+pi.val <- 4 * (pts.cir/n)
+pi.val
+}
+
+#written to find confidence intervals with pi function, can replace with another function
+#confidence interval calculator function
+pi.ci <- function(q){
+pi.rand <- numeric(100) #initialize empty vector to hold means from our sampled output
+for(i in 1:100){
+pi.rep <- replicate(100, pi.fun(q)) #run pie.fun 100x with your specified interval (q value)
+pi.samp <- sample(pi.rep, replace = T) #sample output of pi.rep with replacement
+pi.rand[i] <- mean(pi.samp) #add mean values for each pi.samp run to the pi.rand vector
+}
+pi.con <- quantile(pi.rand, c(0.025, 0.975)) #calculate and return confidence intervals
+pi.con
+}

@@ -1,0 +1,142 @@
+dist <- function(x1, x2, y1, y2){sqrt((x1 - x2)^2 + (y1 - y2)^2)}
+
+plant <- read.table("Crawley_ragwort.txt", header = T)
+attach(plant)
+
+plot(xcoord, ycoord)
+
+#split data by type
+
+plant.skeleton <- as.data.frame(plant[type == "skeleton",])
+plant.regrowth <- as.data.frame(plant[type == "regrowth",])
+plant.seedlings <- as.data.frame(plant[type == "seedling",])
+plant.rosettes <- as.data.frame(plant[type == "rosette",])
+
+#check lengths
+length(plant.seedlings$type)
+[1] 1100
+length(plant.skeleton$type)
+[1] 1978
+length(plant.regrowth$type)
+[1] 135
+length(plant.rosettes$type)
+[1] 146
+
+##Testing distribution of skeleton plants
+
+#initialize data
+r <- with(plant.skeleton, numeric(length(type)))
+nn <- with(plant.skeleton, numeric(length(type)))
+d <- with(plant.skeleton, numeric(length(type)))
+
+#start loop
+for(i in 1:length(r)){
+for(j in 1:length(r)){
+d[j] <- with(plant.skeleton, dist(xcoord[i], xcoord[j], ycoord[i], ycoord[j]))
+}
+r[i] <- min(d[-i])
+nn[i] <- which(d == min(d[-i]))
+}
+
+#expected value for randomness
+exp.ran <- sqrt(length(r/2)/2)
+mean(r)/exp.ran
+[1] 0.5340367
+
+#plot nearest neighbor
+with(plant.skeleton, plot(xcoord, ycoord))
+
+with(plant.skeleton, for(z in 1:length(r)){
+lines(c(xcoord[z], xcoord[nn[z]]), c(ycoord[z], ycoord[nn[z]]))
+})
+
+##so there is a regular distribution of skeleton plants in this data
+
+##Testing distribution of regrowth plants
+
+#initialize data
+r <- with(plant.regrowth, numeric(length(type)))
+nn <- with(plant.regrowth, numeric(length(type)))
+d <- with(plant.regrowth, numeric(length(type)))
+
+#start loop
+for(i in 1:length(r)){
+for(j in 1:length(r)){
+d[j] <- with(plant.regrowth, dist(xcoord[i], xcoord[j], ycoord[i], ycoord[j]))
+}
+r[i] <- min(d[-i])
+nn[i] <- which(d == min(d[-i]))
+}
+
+#expected value for randomness
+exp.ran <- sqrt(length(r/2)/2)
+mean(r)/exp.ran
+[1] 8.623956
+
+#plot nearest neighbor
+with(plant.regrowth, plot(xcoord, ycoord))
+
+with(plant.regrowth, for(z in 1:length(r)){
+lines(c(xcoord[z], xcoord[nn[z]]), c(ycoord[z], ycoord[nn[z]]))
+})
+
+##regrowth plants are aggregated
+
+##Testing distribution of seedlings
+
+#initialize data
+r <- with(plant.seedlings, numeric(length(type)))
+nn <- with(plant.seedlings, numeric(length(type)))
+d <- with(plant.seedlings, numeric(length(type)))
+
+#start loop
+for(i in 1:length(r)){
+for(j in 1:length(r)){
+d[j] <- with(plant.seedlings, dist(xcoord[i], xcoord[j], ycoord[i], ycoord[j]))
+}
+r[i] <- min(d[-i])
+nn[i] <- which(d == min(d[-i]))
+}
+
+#expected value for randomness
+exp.ran <- sqrt(length(r/2)/2)
+mean(r)/exp.ran
+[1] 0.7357472
+
+#plot nearest neighbor
+with(plant.seedlings, plot(xcoord, ycoord))
+
+with(plant.seedlings, for(z in 1:length(r)){
+lines(c(xcoord[z], xcoord[nn[z]]), c(ycoord[z], ycoord[nn[z]]))
+})
+
+#this is close to a random distribution leaning towards some regular distribution of seedlings
+
+##Testing distribution of rosettes
+#initialize data
+r <- with(plant.rosettes, numeric(length(type)))
+nn <- with(plant.rosettes, numeric(length(type)))
+d <- with(plant.rosettes, numeric(length(type)))
+
+#start loop
+for(i in 1:length(r)){
+for(j in 1:length(r)){
+d[j] <- with(plant.rosettes, dist(xcoord[i], xcoord[j], ycoord[i], ycoord[j]))
+}
+r[i] <- min(d[-i])
+nn[i] <- which(d == min(d[-i]))
+}
+
+#expected value for randomness
+exp.ran <- sqrt(length(r/2)/2)
+mean(r)/exp.ran
+[1] 6.738711
+
+#plot nearest neighbor
+with(plant.rosettes, plot(xcoord, ycoord))
+
+with(plant.rosettes, for(z in 1:length(r)){
+lines(c(xcoord[z], xcoord[nn[z]]), c(ycoord[z], ycoord[nn[z]]))
+})
+
+#there is a regular distribution of rosette plants

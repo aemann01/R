@@ -1,0 +1,15 @@
+#get consensus measurement for a larger datafile. Need to provide input data, the variable to split the data by, and the number of levels in the factor variable
+get.consensus.measure <- function(input_data, variable_to_split, levels){
+output <- data.frame(matrix(NA, nrow = levels, ncol = 71))
+names(output) <- c(variable_to_split, measurement.list)
+j <- 2
+for(i in 1:70){
+id <- measurement.list[i]
+obj <- aggregate(input_data[,id] ~ input_data[,variable_to_split], data = input_data, mean)
+names(obj) <- c(variable_to_split, id)
+output[,1] <- as.factor(obj[,1])
+output[,j] <- cbind(obj[,2])
+j <- j + 1
+}
+return(output)
+}
