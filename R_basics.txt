@@ -1,0 +1,108 @@
+#################################
+Using R - The Basics: 
+#################################
+
+Remember, R is a statistics and graphics package, not a programming language (though the syntax resembles many programming languages). R uses an object-oriented language meaning the basic unit in R are objects. 
+
+Some definitions:
+
+Object: Any input or output that you pass to R (e.g. numbers, letters, strings, etc) 
+Vector: Collection of objects that are all the same type (e.g. a collection of numbers) 
+Function: Set of instructions to be carried out on a single object or vector of objects 
+Parameter: Information passed to a function 
+Argument: Similar to a parameter, this is information for the function that tells it how to use or handle the information passed to it 
+ 
+Basic command structure:  
+object assignment expression 
+ 
+So for example (> is command prompt, you don't type it in): 
+
+> mean.limb.size <- c(2,3,4,5) 
+> mean.limb.size 
+ [1] 2 3 4 5 
+
+In this example we used an assignment operator (<-) to assign a vector of objects (2,3,4,5 -- the "c" stands for concatenate) to a new object (mean.limb.size). If we call our vector again R returns a line number [1] and our numerical objects. 
+ 
+> mean.limb.size <- 2+3+4+5 
+> mean.limb.size 
+ [1] 14 
+
+In this example instead of assigning a vector of objects to mean.limb.size we used the addition operator to assign relationships between the objects. If we call mean.limb.size again, R evaluates the expression and returns 14. Now that we have our named object mean.limb.size we might want to do something to it. To this end we can use a function. One useful function that is pre-loaded into the R environment is summary(). This function takes an object or vector and outputs basic summary statistics about it. So for example if we have the following object: 
+
+> daily.attendance <- c(20, 25, 58, 108, 11, 1, 44, 46, 70) 
+ 
+We can get a summary of our data by supplying our object as an argument in the function: 
+
+> summary(daily.attendance) 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.  
+   1.00   20.00   44.00   42.56   58.00  108.00  
+ 
+You can see that this function finds the minimum and maximum value in your object as well as the median and mean values and values that represent the first and third quartiles. 
+
+################################# 
+Rules for naming objects: 
+#################################
+
+-Must begin with a letter 
+
+-Cannot contain the following characters: , - + # & % [ ] { } * 
+
+-Be specific! The name of your object should tell you what your object contains! 
+
+-Object names are case sensitive. Mean.limb.size =\= mean.limb.size 
+
+-If you need to separate words in your name use "." or "_" 
+ 
+#################################
+The R workspace: 
+#################################
+
+You can run R in the command prompt or terminal or a GUI like R commander (http://www.rcommander.com), RStudio (http://www.rstudio.org), or Tinn-R (http://www.sciviews.org/Tinn-R/). Your 'workspace' refers to your current session and all of the objects/packages/etc that you are using in R. There are various commands that can help you keep track of your workspace. 
+ 
+> ls() 
+
+lists all of the objects in your workspace 
+
+> rm() 
+
+remove an object from your workspace by entering its name between the parentheses 
+
+> getwd() 
+
+see which directory you are using with this workspace. This is important as all files you want to use/load/etc in R should be in your working directory! 
+
+> setwd() 
+
+change your working directory (enter path to new directory in parentheses) 
+
+> library() 
+
+tells you which packages are currently loaded into your workspace 
+ 
+Functions and other utilities in R are stored in what are known as packages. Any that are not included in the base R installation need to be installed and loaded to use them in your workspace. 
+
+> install.packages(name, repository)  
+
+> install.packages() is a function that takes two parameters: name of the desired function and the repository that you want to use to download the package. For example to install the package car from the 
+University of Washington repository: 
+
+> install.packages(car, repos="http://cran.wustl.edu") 
+
+To get a list of all available packages to download type the install.packages function with no arguments. Once you have a package installed you need to load it into your workspace (you will need to do this every time you start a new workspace!) 
+
+> library(car) 
+
+You have two options to get help with a particular function in R. If you know the exact name of the function (here we are using the car package) and want to see its help page type: 
+
+> help(car) 
+
+If you are unsure of the exact function name or want to get information about a general topic/statistical test/etc (this example would return information about using t-test in R): 
+
+> ?t-test  
+
+You can also request a demo of a function of utility by typing (this will only work if the person who wrote the function or package included a demo): 
+
+> demo(function) 
+
+To see how awesome R graphic functions can be try demo(graphics)! 
+
